@@ -7,7 +7,7 @@ namespace GameConsole
 {
     class Program
     {
-        static ConsoleKeyInfo keyinfo;
+      
         static string[,] arena = new string[10,50];
         static void Main(string[] args)
         {
@@ -19,7 +19,7 @@ namespace GameConsole
 
         static void RunGame()
         {
-            Console.SetCursorPosition(0, 0);
+            
             while (true)
             {
 
@@ -113,15 +113,9 @@ namespace GameConsole
                 for (int x = 0; x < arena.GetLength(1); x++)
                 {
                     Console.Write(arena[i, x]);
-                    
-
                 }
                 Console.WriteLine();
-               
-
             }
-         
-
         }
         static bool KeyPressMethod() 
         {
@@ -160,29 +154,34 @@ namespace GameConsole
         public static void Test()
         {
             Console.SetCursorPosition(0, 0);
-            Console.Write("################################");
+            Console.Write("______________________________________________________________________________________________________");
             for (int row = 1; row < 10; row++)
             {
                 Console.SetCursorPosition(0, row);
-                Console.Write("#                              #");
+                Console.Write("|                                                                                                     |");
             }
-            Console.SetCursorPosition(0, 10);
-            Console.Write("################################");
+            Console.SetCursorPosition(1, 9);
+            Console.Write("_____________________________________________________________________________________________________");
 
-            int data = 1;
-            System.Diagnostics.Stopwatch clock = new System.Diagnostics.Stopwatch();
-            clock.Start();
+            Console.SetCursorPosition(1, 8);
+            Console.Write("=====================================================================================================");
+
+           
             while (true)
             {
-                data++;
-                Console.SetCursorPosition(1, 2);
-                Console.Write("Current Value: " + data.ToString());
-                Console.SetCursorPosition(1, 3);
-                Console.Write("Running Time: " + clock.Elapsed.TotalSeconds.ToString());
-                Thread.Sleep(10);
+                Console.SetCursorPosition(1, 5);
+                Console.Write("|                                            ∞                                                       |");
+                Console.SetCursorPosition(1, 6);
+                Console.Write("|                                            ||                                                      |");
+                Console.SetCursorPosition(1, 7);
+                Console.Write("|                                            @@                                                      |");
+
+
             }
 
-            Console.ReadKey();
+
+
+            
         }
     }
 }
