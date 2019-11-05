@@ -10,6 +10,8 @@ namespace GameConsolev1._2
         static string name = "";
         static string[,] characterArr = new string[4, 50];
         static string[] enemyArr = new string[50];
+        static string[] enemyHighArr = new string[50];
+
         static Stopwatch clock = new System.Diagnostics.Stopwatch();
         static bool runGame = true;
         static string recordString = "";
@@ -31,14 +33,14 @@ namespace GameConsolev1._2
         public static void StartUp()
         {
             Console.SetCursorPosition(1, 0);
-            Console.Write("__________________________________________________");
+            Console.Write("____________________________________________________________");
             for (int row = 1; row < 10; row++)
             {
                 Console.SetCursorPosition(0, row);
-                Console.Write("|                                                  |");
+                Console.Write("|                                                            |");
             }
             Console.SetCursorPosition(1, 9);
-            Console.Write("__________________________________________________|");
+            Console.Write("____________________________________________________________|");
             Console.SetCursorPosition(1, 1);
             Console.WriteLine("HoleDodger 2032 - 3rd Edition");
             Console.SetCursorPosition(1, 2);
@@ -46,10 +48,13 @@ namespace GameConsolev1._2
             Console.SetCursorPosition(1, 3);
             name = Console.ReadLine();
             Console.SetCursorPosition(1, 4);
-            Console.WriteLine($"Let's go {name} - Dodge the hole!" );
+            Console.WriteLine($"Let's go {name} - Dodge the hole and the bird!" );
             Console.SetCursorPosition(1, 5);
-            Console.WriteLine("Use space to jump. Hit Enter to play!");
+            Console.WriteLine("Use arrow up to jump and arrow down to crouch!");
+            Console.SetCursorPosition(1, 6);
+            Console.WriteLine("Hit Enter to play!");
             Console.ReadLine();
+
         }
 
         static void RunGame()
@@ -65,8 +70,10 @@ namespace GameConsolev1._2
                     BuildArrCharacter();
                     BuildEnemyArr();
                     Jump();
+                    //Crouch();
+                    //KeyPressMethodCrouch();
                     DrawEnemyArr(i);
-                    Thread.Sleep(10);
+                    Thread.Sleep(40);
                     if (enemyArr[25] == "  " && characterArr[0, 25] != " ")
                     {
                         lives--;
@@ -75,10 +82,11 @@ namespace GameConsolev1._2
                         if (lives == 0)
                         {
                             time = clock.Elapsed.Seconds;
+                            DeadCharacter();
                             
-                            Console.SetCursorPosition(1, 1);
+                            Console.SetCursorPosition(21, 4);
                             Console.WriteLine($"Game Over {name}!           ");
-                            Console.SetCursorPosition(1, 2);
+                            Console.SetCursorPosition(18, 5);
                             Console.WriteLine($"You survived {clock.Elapsed.Seconds.ToString()} seconds!           ");
                             Console.SetCursorPosition(1, 3);
                             Console.WriteLine($"                                          ");
@@ -98,14 +106,10 @@ namespace GameConsolev1._2
                             Console.ReadLine();
                             Console.Clear();
                             break;
-
                         }
-
-
                     }
                     Console.SetCursorPosition(1, 2);
-                    Console.Write("Du har klarat dig i: " + clock.Elapsed.Seconds.ToString() + " sekunder!");
-                  
+                    Console.Write("Alive for: " + clock.Elapsed.Seconds.ToString() + " seconds!");
                 }
             }
         }
@@ -113,14 +117,14 @@ namespace GameConsolev1._2
         static void BuildMap()
         {
             Console.SetCursorPosition(1, 0);
-            Console.Write("__________________________________________________");
-            for (int row = 1; row < 10; row++)
+            Console.Write("____________________________________________________________");
+            for (int row = 1; row < 11; row++)
             {
                 Console.SetCursorPosition(0, row);
-                Console.Write("|                                                  |");
+                Console.Write("|                                                            |");
             }
-            Console.SetCursorPosition(1, 9);
-            Console.Write("__________________________________________________|");
+            Console.SetCursorPosition(1, 10);
+            Console.Write("____________________________________________________________|");
             Console.SetCursorPosition(1, 1);
             Console.Write($"Lives: {lives}");
             Console.SetCursorPosition(35, 1);
@@ -142,6 +146,17 @@ namespace GameConsolev1._2
                 DrawJumpingCharacterArr();
             }
         }
+        static void Crouch()
+        {
+            if (true)
+            {
+                DrawCharacterArr();
+            }
+            else
+            {
+                DrawCrouchingCharacterArr();
+            }
+        }
         static void BuildArrCharacter()
         {
             for (int i = 0; i < 4; i++)
@@ -152,9 +167,9 @@ namespace GameConsolev1._2
                 }
             }
 
-            characterArr[0, 25] = "∞";
-            characterArr[1, 25] = "||";
-            characterArr[2, 25] = "@@";
+            characterArr[0, 25] = "oo";
+            characterArr[1, 25] = "()";
+            characterArr[2, 25] = "||";
         }
         static void BuildEnemyArr()
         {
@@ -163,6 +178,15 @@ namespace GameConsolev1._2
                     enemyArr[i] = "#";
             }
         }
+
+        static void BuildEnemyHighArr()
+        {
+            for (int i = 0; i < enemyArr.Length - 1; i++)
+            {
+                enemyArr[i] = " ";
+            }
+        }
+
         static void DrawCharacterArr()
         {
            
@@ -185,18 +209,16 @@ namespace GameConsolev1._2
             for (int row = 3; row < 5; row++)
             {
                 Console.SetCursorPosition(0, row);
-                Console.Write("|                                                  |");
+                Console.Write("|                                                            |");
             }
         }
         static void DrawJumpingCharacterArr()
             {
-            characterArr[0, 24] = " ";
             characterArr[0, 25] = " ";
-            characterArr[0, 26] = " ";
-
-            characterArr[1, 25] = "∞";
-            characterArr[2, 25] = "||";
-            characterArr[3, 25] = "@@";
+  
+            characterArr[1, 25] = "oo";
+            characterArr[2, 25] = "()";
+            characterArr[3, 25] = "||";
 
             Console.SetCursorPosition(1, 3);
                 for (int i = 0; i < characterArr.GetLength(1)-5; i++)
@@ -213,17 +235,54 @@ namespace GameConsolev1._2
                 {
                     Console.Write(characterArr[3, i]);
                 }
-            for (int row = 6; row < 9; row++)
+            for (int row = 6; row < 8; row++)
             {
                 Console.SetCursorPosition(0, row);
-                Console.Write("|                                                  |");
+                Console.Write("|                                                            |");
+            }
+        }
+        static void DrawCrouchingCharacterArr()
+        {
+            characterArr[0, 25] = "oo";
+            characterArr[1, 25] = "()";
+            
+           
+
+            Console.SetCursorPosition(1, 6);
+            for (int i = 0; i < characterArr.GetLength(1) - 5; i++)
+            {
+                Console.Write(characterArr[0, i]);
+            }
+            Console.SetCursorPosition(1, 7);
+            for (int i = 0; i < characterArr.GetLength(1) - 5; i++)
+            {
+                Console.Write(characterArr[1, i]);
+            }
+            Console.SetCursorPosition(1, 7);
+            
+            for (int row = 3; row < 6; row++)
+            {
+                Console.SetCursorPosition(0, row);
+                Console.Write("|                                                            |");
+            }
+        }
+
+        static void DeadCharacter()
+        {
+            for (int row = 3; row < 8; row++)
+            {
+                Console.SetCursorPosition(0, row);
+                Console.Write("|                                                            |");
+                Console.SetCursorPosition(0, 9);
+                Console.Write("|                        8(~==                               |");
+
             }
         }
         static bool KeyPressMethod()
             {
                 if (Console.KeyAvailable)
                 {
-                    var isUp = Console.ReadKey().Key == ConsoleKey.Spacebar;
+                    var isUp = Console.ReadKey().Key == ConsoleKey.UpArrow;
                     return isUp;
                 }
                 else
@@ -231,6 +290,25 @@ namespace GameConsolev1._2
                     return false;
                 }
             }
+        static void KeyPressMethodCrouch()
+        {
+            if (Console.KeyAvailable)
+            {
+                if (Console.ReadKey().Key == ConsoleKey.DownArrow)
+                {
+                    DrawCrouchingCharacterArr();
+                } 
+                
+                if (Console.ReadKey().Key == ConsoleKey.UpArrow)
+                {
+                    DrawJumpingCharacterArr();
+                }
+            }
+            else
+            {
+                DrawCharacterArr();
+            }
+        }
         static void DrawEnemyArr(int nr)
         {
             enemyArr[nr] ="  ";
@@ -242,33 +320,6 @@ namespace GameConsolev1._2
             }
         }
 
-
-        static void BuildJumpingCharacter()
-        {
-            Console.SetCursorPosition(1, 3);
-            Console.Write("                                             ∞                                                       |");
-            Console.SetCursorPosition(1, 4);
-            Console.Write("                                             ||                                                      |");
-            Console.SetCursorPosition(1, 5);
-            Console.Write("                                             @@                                                      |");
-            Console.SetCursorPosition(1, 6);
-            Console.Write("                                                                                                     |");
-            Console.SetCursorPosition(1, 7);
-            Console.Write("                                                                                                     |");
-        }
-        static void BuildCharacter()
-        {
-            Console.SetCursorPosition(1, 3);
-            Console.Write("                                                                                                     |");
-            Console.SetCursorPosition(1, 4);
-            Console.Write("                                                                                                     |");
-            Console.SetCursorPosition(1, 5);
-            Console.Write("                                             ∞                                                       |");
-            Console.SetCursorPosition(1, 6);
-            Console.Write("                                             ||                                                      |");
-            Console.SetCursorPosition(1, 7);
-            Console.Write("                                             @@                                                      |");
-        }
     }
     }
 
