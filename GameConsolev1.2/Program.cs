@@ -12,9 +12,10 @@ namespace GameConsolev1._2
         static string[] enemyArr = new string[50];
         static Stopwatch clock = new System.Diagnostics.Stopwatch();
         static bool runGame = true;
-        static string record = "";
-        
-        
+        static string recordString = "";
+        static string recordHolder = "";
+        static int recordTime = 0;
+        static int time;
 
         static void Main(string[] args)
         {
@@ -70,19 +71,32 @@ namespace GameConsolev1._2
                     {
                         lives--;
                         Console.SetCursorPosition(1, 1);
-                        Console.WriteLine($"Liv: {lives}");
+                        Console.WriteLine($"Lives: {lives}");
                         if (lives == 0)
                         {
+                            time = clock.Elapsed.Seconds;
+                            
                             Console.SetCursorPosition(1, 1);
                             Console.WriteLine($"Game Over {name}!           ");
                             Console.SetCursorPosition(1, 2);
-                            Console.WriteLine($"Du klarade dig i {clock.Elapsed.Seconds.ToString()} sekunder!           ");
+                            Console.WriteLine($"You survived {clock.Elapsed.Seconds.ToString()} seconds!           ");
                             Console.SetCursorPosition(1, 3);
                             Console.WriteLine($"                                          ");
+                         
+                            if (time > recordTime)
+                            {
+                                recordTime = time;
+                                recordHolder = name;
+                            }
+                            recordString = recordTime.ToString();
+                            Console.SetCursorPosition(35, 1);
+                            Console.Write($"Highscore: {recordTime} sec");
+                            Console.SetCursorPosition(35, 2);
+                            Console.Write($"By: {recordHolder}");
+                            clock.Reset();
                             gameStillRunning = false;
                             Console.ReadLine();
                             Console.Clear();
-                            clock.Reset();
                             break;
 
                         }
@@ -95,10 +109,7 @@ namespace GameConsolev1._2
                 }
             }
         }
-        static void LoseLife()
-        {
-
-        }
+     
         static void BuildMap()
         {
             Console.SetCursorPosition(1, 0);
@@ -111,8 +122,14 @@ namespace GameConsolev1._2
             Console.SetCursorPosition(1, 9);
             Console.Write("__________________________________________________|");
             Console.SetCursorPosition(1, 1);
-            Console.Write($"Liv: {lives}");
-            
+            Console.Write($"Lives: {lives}");
+            Console.SetCursorPosition(35, 1);
+            Console.Write($"Highscore: {recordHolder}");
+            Console.SetCursorPosition(35, 2);
+            Console.Write($"With {recordString} sec");
+
+
+
         }
         static void Jump()
         {
