@@ -69,13 +69,17 @@ namespace GameConsolev1._2
                 {
                     BuildArrCharacter();
                     BuildEnemyArr();
-                    Jump();
+                    BuildEnemyHighArr();
+                    //Jump();
                     //Crouch();
-                    //KeyPressMethodCrouch();
+                    
                     DrawEnemyArr(i);
-                    Thread.Sleep(40);
-                    if (enemyArr[25] == "  " && characterArr[0, 25] != " ")
+                    DrawEnemyHighArr(i);
+                    KeyPressMethodCrouch();
+                    Thread.Sleep(55);
+                    if ((enemyArr[25] == "  " && characterArr[0, 25] != " ")|| (enemyHighArr[25] == "~o~" && characterArr[2, 25] != "CR"))
                     {
+                        Console.Beep(500,50);
                         lives--;
                         Console.SetCursorPosition(1, 1);
                         Console.WriteLine($"Lives: {lives}");
@@ -90,7 +94,7 @@ namespace GameConsolev1._2
                             Console.WriteLine($"You survived {clock.Elapsed.Seconds.ToString()} seconds!           ");
                             Console.SetCursorPosition(1, 3);
                             Console.WriteLine($"                                          ");
-                         
+                            Console.Beep(100, 2000);
                             if (time > recordTime)
                             {
                                 recordTime = time;
@@ -183,7 +187,7 @@ namespace GameConsolev1._2
         {
             for (int i = 0; i < enemyArr.Length - 1; i++)
             {
-                enemyArr[i] = " ";
+                enemyHighArr[i] = " ";
             }
         }
 
@@ -206,7 +210,7 @@ namespace GameConsolev1._2
                 Console.Write(characterArr[2, i]);
             }
 
-            for (int row = 3; row < 5; row++)
+            for (int row = 3; row < 4; row++)
             {
                 Console.SetCursorPosition(0, row);
                 Console.Write("|                                                            |");
@@ -245,8 +249,10 @@ namespace GameConsolev1._2
         {
             characterArr[0, 25] = "oo";
             characterArr[1, 25] = "()";
-            
-           
+            characterArr[2, 25] = "CR";
+
+
+
 
             Console.SetCursorPosition(1, 6);
             for (int i = 0; i < characterArr.GetLength(1) - 5; i++)
@@ -258,9 +264,8 @@ namespace GameConsolev1._2
             {
                 Console.Write(characterArr[1, i]);
             }
-            Console.SetCursorPosition(1, 7);
             
-            for (int row = 3; row < 6; row++)
+            for (int row = 5; row < 6; row++)
             {
                 Console.SetCursorPosition(0, row);
                 Console.Write("|                                                            |");
@@ -298,8 +303,7 @@ namespace GameConsolev1._2
                 {
                     DrawCrouchingCharacterArr();
                 } 
-                
-                if (Console.ReadKey().Key == ConsoleKey.UpArrow)
+                else 
                 {
                     DrawJumpingCharacterArr();
                 }
@@ -308,6 +312,7 @@ namespace GameConsolev1._2
             {
                 DrawCharacterArr();
             }
+           
         }
         static void DrawEnemyArr(int nr)
         {
@@ -318,6 +323,30 @@ namespace GameConsolev1._2
             {
                 Console.Write(enemyArr[i]);
             }
+        }
+        static void DrawEnemyHighArr(int nr)
+        {
+            if (nr > 15)
+            {
+                enemyHighArr[nr - 15] = "~o~";
+                Console.SetCursorPosition(1, 4);
+
+                for (int i = 0; i < enemyHighArr.Length - 1; i++)
+                {
+                    Console.Write(enemyHighArr[i]);
+                }
+            }
+            else if ( nr < 15)
+            {
+                enemyHighArr[nr+35] = "~o~";
+                Console.SetCursorPosition(1, 4);
+
+                for (int i = 0; i < enemyHighArr.Length - 1; i++)
+                {
+                    Console.Write(enemyHighArr[i]);
+                }
+            }
+         
         }
 
     }
