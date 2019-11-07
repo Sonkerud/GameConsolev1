@@ -77,7 +77,7 @@ namespace GameConsolev1._2
                     DrawEnemyArr(i);
                     DrawEnemyHighArr(i);
                     KeyPressMethodCrouch();
-                    Thread.Sleep(55);
+                    Thread.Sleep(48);
                     if ((enemyArr[25] == "  " && characterArr[0, 25] != " ")|| (enemyHighArr[25] == "~o~" && characterArr[2, 25] != "CR"))
                     {
                         Console.Beep(500,50);
