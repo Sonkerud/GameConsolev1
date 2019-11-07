@@ -27,7 +27,6 @@ namespace GameConsolev1._2
                 StartUp();
                 RunGame();
             }
-           
         }
 
         public static void StartUp()
@@ -46,6 +45,8 @@ namespace GameConsolev1._2
             Console.SetCursorPosition(1, 2);
             Console.WriteLine("Who's Playing?");
             Console.SetCursorPosition(1, 3);
+            Console.WriteLine("Name:");
+            Console.SetCursorPosition(6, 3);
             name = Console.ReadLine();
             Console.SetCursorPosition(1, 4);
             Console.WriteLine($"Let's go {name} - Dodge the hole and the bird!" );
