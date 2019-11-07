@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -20,6 +21,7 @@ namespace GameConsolev1._2
         static string recordHolder = "";
         static int recordTime = 0;
         static int time;
+        static List<string> scoreList = new List<string>();
         static List<Player> highScoreList = new List<Player>();
         
 
@@ -46,11 +48,10 @@ namespace GameConsolev1._2
 
         private static void ShowHighscore()
         {
-          
-            foreach (var player in highScoreList.OrderByDescending(x => x.Score))
+
+            foreach (var item in scoreList)
             {
-                Console.WriteLine($"Namn: {player.Name} Score: {player.Score}");
-                
+                Console.WriteLine(item  );
             }
             Console.ReadLine();
         }
@@ -133,6 +134,7 @@ namespace GameConsolev1._2
                             Console.SetCursorPosition(35, 2);
                             Console.Write($"By: {recordHolder}");
                             highScoreList.Add(new Player { Name = name, Score = time});
+                            scoreList.Add("Name: " + name + " " + "Score: " + time.ToString());
                             clock.Reset();
                             gameStillRunning = false;
                             Console.ReadLine();
@@ -376,6 +378,8 @@ namespace GameConsolev1._2
             }
          
         }
+
+       
 
     }
     }
