@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace GameConsolev1._2
@@ -18,15 +20,39 @@ namespace GameConsolev1._2
         static string recordHolder = "";
         static int recordTime = 0;
         static int time;
+        static List<Player> highScoreList = new List<Player>();
+        
 
         static void Main(string[] args)
         {
             while (runGame)
             {
+                Console.WriteLine("1. Play Game");
+                Console.WriteLine("2. Show Highscore");
+
+                    string input = Console.ReadLine();
+                switch (input) 
+                {
+                    case "1":
                 lives = 3;
                 StartUp();
                 RunGame();
+                        break;
+                    case "2": ShowHighscore();
+                        break;
+                } 
             }
+        }
+
+        private static void ShowHighscore()
+        {
+          
+            foreach (var player in highScoreList.OrderByDescending(x => x.Score))
+            {
+                Console.WriteLine($"Namn: {player.Name} Score: {player.Score}");
+                
+            }
+            Console.ReadLine();
         }
 
         public static void StartUp()
@@ -106,6 +132,7 @@ namespace GameConsolev1._2
                             Console.Write($"Highscore: {recordTime} sec");
                             Console.SetCursorPosition(35, 2);
                             Console.Write($"By: {recordHolder}");
+                            highScoreList.Add(new Player { Name = name, Score = time});
                             clock.Reset();
                             gameStillRunning = false;
                             Console.ReadLine();
@@ -282,7 +309,7 @@ namespace GameConsolev1._2
                 Console.SetCursorPosition(0, 9);
                 Console.Write("|                        8(~==                               |");
 
-            }
+            }   
         }
         static bool KeyPressMethod()
             {
